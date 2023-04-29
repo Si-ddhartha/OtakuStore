@@ -1,0 +1,1 @@
+web: gunicorn otakustore.wsgi --log-file -
