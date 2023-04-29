@@ -52,9 +52,11 @@
                     <h3 class="item-total">${{ item.get_total|floatformat:2 }}</h3>
                 </div>
 
+                {% if request.user.is_authenticated %}
                 <div>
                     <a href="{% url 'delete_cart_item' item.id %}"> <img src="{% static 'store/images/trash.png' %}" alt=""> </a>
                 </div>
+                {% endif %}
             </div>
         </div>
     </div>
