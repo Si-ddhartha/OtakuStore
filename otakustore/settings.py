@@ -30,7 +30,7 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://otakustore-production.up.railway.app/'
+    'https://otakustore-production.up.railway.app'
 ]
 
 ALLOWED_HOSTS = ['*']
