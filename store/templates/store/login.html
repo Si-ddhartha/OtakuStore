@@ -1,0 +1,56 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'store/css/login.css' %}" rel="stylesheet" type="text/css">
+    <title>Otaku Store</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Login</h1>
+    
+        {% if messages %}
+            <ul class="messages" style="list-style: none; padding: 0;">
+                {% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                    {{ message }}
+                </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    
+        <form method="POST">
+            {% csrf_token %}
+            
+            <input type="text" name="username" placeholder="User Name">
+            <br>
+    
+            <input type="password" name="password" placeholder="Password">
+            <br>
+    
+            <input type="submit" value="Login" class="login-button">
+        </form>
+    
+        <p>Don't have an account?</p>
+        <a href="{% url 'register' %}">Register</a>
+    </div>
+    
+    
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function(){
+            if (document.getElementsByClassName('success').length == 1)
+            {
+                swal({
+                    title: "Your account has been created successfully.",
+                    text: 'Please click on the link sent to your mail to verify your account.'
+                })
+            }
+        })
+    </script>
+</body>
+</html>

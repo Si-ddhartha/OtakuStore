@@ -1,0 +1,60 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'store/css/register.css' %}" rel="stylesheet" type="text/css">
+    <title>Otaku Store</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Register</h1>
+
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                {{ message }}
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+
+            {% if form.errors %} 
+            {% for field in form %} 
+            {% for error in field.errors %}
+                <p> {{ error }}</p> 
+            {% endfor %}
+            {% endfor %}
+            {% endif %}
+
+            <label >{{ form.username.label }}</label>
+            {{ form.username }}
+
+            <label >{{ form.email.label }}</label>
+            {{ form.email }}
+
+            <label >{{ form.password1.label }}</label>
+            {{ form.password1 }}
+            <p style="font-weight: 600; margin: 0;"> <i>Password must be atleast 8 characters long.</i>   </p>
+            
+            <label >{{ form.password2.label }}</label>
+            {{ form.password2 }}
+
+            <!-- {{form.as_p}} -->
+            <br>
+
+            <input type="submit" value="Register" class="register-button">
+        </form>
+
+        <p>Already have an account?</p>
+        <a href="{% url 'login' %}">Login</a>
+    </div>
+</body>
+</html>

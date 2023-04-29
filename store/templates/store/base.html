@@ -1,0 +1,225 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'store/css/base.css' %}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    {% block css%}
+    {% endblock %}
+    <title>OtakuStore</title>
+
+    <script>
+        var user = '{{ request.user }}'
+
+        function getToken(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        const csrftoken = getToken('csrftoken');
+
+        function getCookie(name){
+            var cookieArr = document.cookie.split(";");
+
+            for(var i = 0; i < cookieArr.length; i++){
+                var cookiePair = cookieArr[i].split("=");
+
+                if(name == cookiePair[0].trim()){
+                    return decodeURIComponent(cookiePair[1]);
+                }
+            }
+
+            return null
+        }
+
+        var cart = JSON.parse(getCookie('cart'))
+
+        if(cart == undefined){
+            cart = {}
+            document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
+        }
+        console.log('Cart; ', cart)
+    </script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <a href="{% url 'home' %}">
+                <img src="{% static 'store/images/OS-bgremoved-transformed.png' %}" id="logo">
+            </a>
+        </div>
+
+        <div class="toggle-button">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+
+        <div class="nav-group">
+            <div class="group1">
+                <ul>
+                    <li style="margin-left: 50px;">
+                        <a href="{% url 'home' %}">
+                            <h3 class="nav-links">Home</h3>
+                        </a>
+                    </li>
+
+                    <li style="margin-left: 50px;" class="category-li" id="category-li">
+                        <h3 class="nav-links">Category</h3>
+                        <ul>
+                            <li>
+                                <a href="{% url 'products' %}">All Products</a>
+                            </li>
+                            {% for category in categories %}
+                                <li> <a href="{% url 'products' category.name %}">{{ category.name }}</a> </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+
+                    <li style="margin-left: 50px;">
+                        <a href="{% url 'contact' %}">
+                            <h3 class="nav-links">Contact Us</h3>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="group2">
+                <ul>
+                    <li>
+                        {% if request.user.is_authenticated %}
+                            <div class="user">
+                                <div class="user-info">
+                                    <img src="{% static 'store/images/profile.png' %}" alt="" style="height:48px; padding-right: 4px;">
+                                    <h4> Hi, {{ request.user.username|title }} </h4>
+                                </div>
+                                
+                                <div class="user-dropdown">
+                                    <a href="{% url 'logout' %}">Logout</a>
+                                </div>
+                            </div>
+                        {% else %}
+                            <a href="{% url 'login' %}"> <h3 style="margin-right: 24px; margin-top: 0.5em;">Login</h3> </a>
+                        {% endif %}
+                    </li>
+
+                    <li>
+                        <a href="{% url 'cart' %}" class="cart">
+                            <img src="{% static 'store/images/cart.png' %}" id="cart-img">
+                            <span id="total-quantity">{{ qty }}</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="small-screen-group2">
+            <ul>
+                <li>
+                    {% if request.user.is_authenticated %}
+                        <div class="user">
+                            <div class="user-info">
+                                <img src="{% static 'store/images/profile.png' %}" alt="" style="height:48px; padding-right: 4px;">
+                                <h4> Hi, {{ request.user.username|title }} </h4>
+                            </div>
+                            
+                            <div class="user-dropdown">
+                                <a href="{% url 'logout' %}">Logout</a>
+                            </div>
+                        </div>
+                    {% else %}
+                        <a href="{% url 'login' %}"> <h3 style="margin-right: 24px; margin-top: 0.5em;">Login</h3> </a>
+                    {% endif %}
+                </li>
+
+                <li>
+                    <a href="{% url 'cart' %}" class="cart">
+                        <img src="{% static 'store/images/cart.png' %}" id="cart-img">
+                        <span id="total-quantity">{{ qty }}</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+            <!-- <ul class="nav-ul">
+                <li style="margin-left: 50px;">
+                    <a href="{% url 'home' %}">
+                        <h3 class="nav-links">Home</h3>
+                    </a>
+                </li>
+
+                <li style="margin-left: 50px;" class="category-li" id="category-li">
+                    <h3 class="nav-links">Category</h3>
+                    <ul>
+                        <li>
+                            <a href="{% url 'products' %}">All Products</a> </li>
+                        </li>
+                        {% for category in categories %}
+                            <li> <a href="{% url 'products' category.name %}">{{ category.name }}</a> </li>
+                        {% endfor %}
+                    </ul>
+
+                    <!-- <div class="dropdown">
+                        <h3 class="nav-links"> Category </h3>
+                        <div class="dropdown-options category-options">
+                            <ul class="category-ul">
+                                <li> <a href="/">All Products</a> </li>
+                                {% for category in categories %}
+                                    <li> <a href="/?category={{ category.id }}">{{ category.name }}</a> </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div> -->
+                <!-- </li> -->
+
+                <!-- <li style="margin-right: auto; margin-left: 50px;">
+                    <h3 class="nav-links">Contact Us</h3>
+                </li> -->
+
+                <!-- <li>
+                    {% if request.user.is_authenticated %}
+                        <div class="dropdown">
+                            <div class="profile">
+                                <img src="{% static 'store/images/profile.png' %}" alt="" style="height:48px; padding-right: 4px;">
+                                <h4> Hi, {{ request.user.username|title }} </h4>
+                            </div>
+                            
+                            <div class="dropdown-options profile-options">
+                                <a href="{% url 'logout' %}">Logout</a>
+                            </div>
+                        </div>
+                    {% else %}
+                        <a href="{% url 'login' %}"> <h3 style="margin-right: 24px;">Login</h3> </a>
+                    {% endif %}
+                </li> -->
+                
+                <!-- <li>
+                    <a href="{% url 'cart' %}" class="cart">
+                        <img src="{% static 'store/images/cart.png' %}" id="cart-img">
+                        <span id="total-quantity">{{ qty }}</span>
+                    </a>
+                </li> -->
+            <!-- </ul>  -->
+    </nav>
+
+    {% block body %}
+    {% endblock %}
+
+    <script src="{% static 'store/js/cart.js' %}"></script>
+    <script src="{% static 'store/js/nav.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block css%}
+    <link href="{% static 'store/css/contact.css' %}" rel="stylesheet" type="text/css">
+    <!-- <link rel="stylesheet" 
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> -->
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="left">
+        <h1>Contact Us</h1>
+        
+        <div class="form">
+            <p>feel free to contact us and we will get <br> back to you as soon as we can.</p>
+
+            <form action="">
+                {% csrf_token %}
+                <input type="text" placeholder="name" required>
+                <input type="email" placeholder="email" required>
+                <input type="text" placeholder="tell us something" required>
+                <input type="submit" value="Send">
+            </form>
+        </div>
+    </div>
+
+    <div class="right">
+        <div class="contact-info">
+            <p>E-mail <br> fake@email.com</p>
+            <br>
+            <p>Contact number <br> 123-456-7890</p>
+        </div>
+
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d728.9044539305489!2d139.7744954296783!3d35.70222627991855!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188ea73ea6f4ff%3A0x5eb9f1e50fe061e3!2sAkihabara%2C%20Taito%20City%2C%20Tokyo%20110-0006%2C%20Japan!5e0!3m2!1sen!2sin!4v1681966004453!5m2!1sen!2sin" width="500" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+        <div class="icons">
+            <a href="">
+                <div class="layer">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span class="fab fa-facebook-f"></span>
+                </div>
+                <div class="text">
+                    Facebook
+                </div>
+            </a>
+
+            <a href="">
+                <div class="layer">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span class="fab fa-twitter"></span>
+                </div>
+                <div class="text">
+                    Twitter
+                </div>
+            </a>
+
+            <a href="">
+                <div class="layer">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span class="fab fa-instagram"></span>
+                </div>
+                <div class="text">
+                    Instagram
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

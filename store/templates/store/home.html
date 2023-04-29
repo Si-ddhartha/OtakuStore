@@ -1,0 +1,80 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block css%}
+    <link href="{% static 'store/css/home.css' %}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block body%}
+<div class="cover" id="cover">
+        <div class="cover-text">
+            <h1>Welcome to OTAKU STORE</h1> <br>
+            <p>One stop site for your favourite <br> Anime Merchandise.</p> <br>
+            <button> <a href="{% url 'products' %}">Shop Now</a> </button>
+        </div>
+
+        <div class="cover-img">
+            <div class="img1">
+                <img src="{% static 'store/images/cover1.jpg' %}" alt="">
+            </div>
+
+            <div class="img2">
+                <img src="{% static 'store/images/cover3.jpg' %}" alt="">
+            </div>
+        </div>
+</div>
+
+<div class="header">
+    <h1>Featured Products</h1>
+</div>
+
+<div class="items" id="toObserve">
+    {% for product in products %}
+    <div class="item">
+        {% if product.image %}
+            <img src="{{ product.image.url }}" style="width: 250px; height: 250px;">
+        {% else %}
+            <img src="{% static 'store/images/temp.webp' %}" >
+        {% endif %}
+        <br>
+        <div class="info">
+            <div class="price">
+                <span class="price-amount">${{ product.price }} USD</span>
+            </div>
+            <div class="title">
+                <h2 class="title-name">{{ product.name }}</h2>
+            </div>
+        </div>
+        <button data-product="{{ product.id }}" data-action="add" class="update-cart add-button">Add to cart</button>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- <script src="{% static 'store/js/home.js' %}"></script> -->
+<script>
+    const items = document.getElementById('toObserve')
+
+    const observer = new IntersectionObserver(entries =>{
+        entries.forEach(entry => {
+            entry.target.classList.toggle('show-items', entry.isIntersecting)
+            if(entry.isIntersecting) observer.unobserve(entry.target)
+        })
+    }, {
+        threshold: 0.1
+    })
+
+    observer.observe(items)
+
+    // apply blur on cover area
+    const category = document.getElementById('category-li')
+    const cover = document.getElementById('cover')
+
+    category.addEventListener('mouseenter', (e) => {
+        cover.style.filter = "blur(2px)"
+    })
+
+    category.addEventListener('mouseleave', (e) => {
+        cover.style.filter = "blur(0px)"
+    })
+</script>
+{% endblock %}

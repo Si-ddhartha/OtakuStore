@@ -1,0 +1,63 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block css%}
+    <link href="{% static 'store/css/products.css' %}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block body %}
+
+<div class="items">
+{% for product in products %}
+    <div class="item">
+        {% if product.image %}
+            <img src="{{ product.image.url }}" style="width: 250px; height: 250px;">
+        {% else %}
+            <img src="{% static 'store/images/temp.webp' %}" >
+        {% endif %}
+        <br>
+        <div class="info">
+            <div class="price">
+                <span class="price-amount">${{ product.price }} USD</span>
+            </div>
+            <div class="title">
+                <h2 class="title-name">{{ product.name }}</h2>
+            </div>
+        </div>
+        <button data-product="{{ product.id }}" data-action="add" class="update-cart add-button">Add to cart</button>
+    </div>
+{% endfor %}
+</div>
+
+<div class="topbtn" onclick="scrollToTop()">
+    <img src="{% static 'store/images/eagle (1).png' %}" >
+    <img src="{% static 'store/images/tothetop1.png' %}" style="width:128px;">
+</div>
+
+<script>
+    // apply blur on products
+    const category = document.getElementById('category-li')
+    const products = document.getElementsByClassName('items')[0]
+
+    category.addEventListener('mouseenter', (e) => {
+        products.style.filter = "blur(2px)"
+    })
+
+    category.addEventListener('mouseleave', (e) => {
+        products.style.filter = "blur(0px)"
+    })
+
+
+    window.addEventListener('scroll', function(){
+        const scroll = document.querySelector('.topbtn');
+        scroll.classList.toggle("active", window.scrollY > 800)
+    })
+
+    function scrollToTop(){
+        window.scrollTo({
+            top: 0
+        })
+    }
+</script>
+
+{% endblock %}
