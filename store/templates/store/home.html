@@ -32,7 +32,7 @@
     {% for product in products %}
     <div class="item">
         {% if product.image %}
-            <img src="{{ product.image.url }}" style="width: 250px; height: 250px;">
+            <img src="{{ product.image.url }}">
         {% else %}
             <img src="{% static 'store/images/temp.webp' %}" >
         {% endif %}

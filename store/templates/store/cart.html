@@ -54,7 +54,7 @@
 
                 {% if request.user.is_authenticated %}
                 <div>
-                    <a href="{% url 'delete_cart_item' item.id %}"> <img src="{% static 'store/images/trash.png' %}" alt=""> </a>
+                    <a href="{% url 'delete_cart_item' item.id %}"> <img src="{% static 'store/images/trash.png' %}" alt="delete cart item" class="trash"> </a>
                 </div>
                 {% endif %}
             </div>

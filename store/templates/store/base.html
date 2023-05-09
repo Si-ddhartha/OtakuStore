@@ -10,7 +10,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="{% static 'store/images/favicon-32x32.png' %}">
     <link rel="icon" type="image/png" sizes="16x16" href="{% static 'store/images/favicon-16x16.png' %}">
     <link rel="manifest" href="{% static 'store/images/site.webmanifest' %}">
-    <link href="{% static 'store/css/base.css' %}" rel="stylesheet" type="text/css">
+    <link  rel="stylesheet" type="text/css" href="{% static 'store/css/base.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     {% block css%}
     {% endblock %}
@@ -142,7 +142,7 @@
                             </div>
                             
                             <div class="user-dropdown">
-                                <a href="{% url 'logout' %}">Logout</a>
+                                <a href="{% url 'logout' %}" class="log-in-out"> <h3>Login</h3> </a>
                             </div>
                         </div>
                     {% else %}
@@ -157,67 +157,15 @@
                     </a>
                 </li>
             </ul>
+        </div>        
+        
+        <div class="xsmall-loginout">
+            {% if request.user.is_authenticated %}
+                <a href="{% url 'logout' %}"> <h3>Logout</h3> </a>
+            {% else %}
+                <a href="{% url 'login' %}"> <h3>Login</h3> </a>
+            {% endif %}
         </div>
-
-            <!-- <ul class="nav-ul">
-                <li style="margin-left: 50px;">
-                    <a href="{% url 'home' %}">
-                        <h3 class="nav-links">Home</h3>
-                    </a>
-                </li>
-
-                <li style="margin-left: 50px;" class="category-li" id="category-li">
-                    <h3 class="nav-links">Category</h3>
-                    <ul>
-                        <li>
-                            <a href="{% url 'products' %}">All Products</a> </li>
-                        </li>
-                        {% for category in categories %}
-                            <li> <a href="{% url 'products' category.name %}">{{ category.name }}</a> </li>
-                        {% endfor %}
-                    </ul>
-
-                    <!-- <div class="dropdown">
-                        <h3 class="nav-links"> Category </h3>
-                        <div class="dropdown-options category-options">
-                            <ul class="category-ul">
-                                <li> <a href="/">All Products</a> </li>
-                                {% for category in categories %}
-                                    <li> <a href="/?category={{ category.id }}">{{ category.name }}</a> </li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    </div> -->
-                <!-- </li> -->
-
-                <!-- <li style="margin-right: auto; margin-left: 50px;">
-                    <h3 class="nav-links">Contact Us</h3>
-                </li> -->
-
-                <!-- <li>
-                    {% if request.user.is_authenticated %}
-                        <div class="dropdown">
-                            <div class="profile">
-                                <img src="{% static 'store/images/profile.png' %}" alt="" style="height:48px; padding-right: 4px;">
-                                <h4> Hi, {{ request.user.username|title }} </h4>
-                            </div>
-                            
-                            <div class="dropdown-options profile-options">
-                                <a href="{% url 'logout' %}">Logout</a>
-                            </div>
-                        </div>
-                    {% else %}
-                        <a href="{% url 'login' %}"> <h3 style="margin-right: 24px;">Login</h3> </a>
-                    {% endif %}
-                </li> -->
-                
-                <!-- <li>
-                    <a href="{% url 'cart' %}" class="cart">
-                        <img src="{% static 'store/images/cart.png' %}" id="cart-img">
-                        <span id="total-quantity">{{ qty }}</span>
-                    </a>
-                </li> -->
-            <!-- </ul>  -->
     </nav>
 
     {% block body %}

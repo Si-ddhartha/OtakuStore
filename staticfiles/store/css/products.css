@@ -30,6 +30,11 @@
     overflow: hidden;
 }
 
+.item > img{
+    width: 250px;
+    height: 250px;
+}   
+
 .price{
     margin-top: 5px;
 }
@@ -83,4 +88,57 @@
     bottom: 50px;
     visibility: visible;
     opacity: 1;
+}
+
+
+@media screen and (max-width: 800px){
+    .topbtn{
+        width: 100px;
+        right: 30px;
+    }
+
+    .topbtn.active{
+        bottom: 30px;
+    }
+}
+
+@media screen and (max-width: 679px){
+    .item{
+        width: calc(45%);
+        margin-left: 10px;
+        margin-top: 10px;
+        padding: 10px;
+    }
+
+    .item > img{
+        width: 150px;
+        height: 150px;
+    }
+
+    .add-button{
+        width: 100%;
+        margin-left: 0;
+        font-size: 13px;
+    }
+}
+
+@media screen and (max-width: 500px){
+    .topbtn{
+        width: 80px;
+    }
+
+    .topbtn.active{
+        bottom: 18px;
+    }
+}
+
+@media screen and (max-width: 380px){
+    .topbtn{
+        width: 62px;
+        right: 12px;
+    }
+
+    .topbtn.active{
+        bottom: 12px;
+    }
 }
