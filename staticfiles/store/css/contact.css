@@ -203,6 +203,11 @@ iframe{
 
 
 @media screen and (max-width: 900px){
+    .group1 > ul > li{
+        background-color: #080806;
+        border: none;
+    }
+
     .small-screen-group2{
         display: none;
     }
@@ -227,6 +232,12 @@ iframe{
 
     iframe{
         width: 100%;
+    }
+}
+
+@media screen and (max-width:500px){
+    .xsmall-loginout{
+        display: none;
     }
 }
 
