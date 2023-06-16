@@ -1,7 +1,7 @@
 # OtakuStore
 **Django** based ecommerce website that provides users with a seamless shopping experience.
 
-It features an easy-to-use interface that allows customers to browse through various products, add items to their cart, and make payments securely.
+It features an easy-to-use interface that allows customers to browse through various products, add items to their cart, and make payments securely
 
 ## Key Features
 * User registration 
